@@ -1,0 +1,8 @@
+# .swiftformat (minimal, sensible defaults)
+--indent 4
+--wraparguments after-first
+--wrapcollections before-first
+--stripunusedargs closure-only
+--self remove
+
+
