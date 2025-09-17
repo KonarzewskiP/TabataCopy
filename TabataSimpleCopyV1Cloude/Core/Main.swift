@@ -11,10 +11,18 @@ struct Main: View {
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-
+            
             VStack(spacing: 32) {
                 
                 VStack(alignment: .leading) {
+                    Spacer()
+                    Text("Press Play To")
+                        .font(.system(size: 50))
+                    Text("Start")
+                        .font(.system(size: 50))
+                    Spacer()
+                    Spacer()
+                    
                     Text("Loaded Preset ")
                     +
                     Text("Tabata")
@@ -26,7 +34,6 @@ struct Main: View {
                         .fontWeight(.bold)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundStyle(.white)
                 
                 VStack(alignment: .leading) {
 //                    Spacer()
@@ -36,12 +43,12 @@ struct Main: View {
                         .fontWeight(.bold)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundStyle(.white)
 
                 // Footer with control buttons
                 Footer()
                     .padding(.top, 24)
             }
+            .foregroundStyle(.white)
         }
     }
 }
