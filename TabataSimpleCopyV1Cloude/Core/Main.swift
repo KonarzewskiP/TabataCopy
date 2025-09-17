@@ -12,7 +12,21 @@ struct Main: View {
         ZStack {
             Color.black.ignoresSafeArea()
 
-            VStack(spacing: 0) {
+            VStack(spacing: 32) {
+                
+                VStack(alignment: .leading) {
+                    Text("Loaded Preset ")
+                    +
+                    Text("Tabata")
+                        .fontWeight(.bold)
+                        
+                    Text("Last workout: ")
+                    +
+                    Text("Yesterday")
+                        .fontWeight(.bold)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundStyle(.white)
                 
                 VStack(alignment: .leading) {
 //                    Spacer()
@@ -21,11 +35,12 @@ struct Main: View {
                     Text("Anne Frank")
                         .fontWeight(.bold)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundStyle(.white)
 
                 // Footer with control buttons
                 Footer()
-//                    .frame(alignment: .bottom)
+                    .padding(.top, 24)
             }
         }
     }
