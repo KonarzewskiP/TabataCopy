@@ -14,7 +14,7 @@ class QuoteClient {
     
     // MARK: - Properties
     // The base URL for the quotes API
-    private let baseURL = "http://api.quotable.io"
+    private let baseURL = "https://zenquotes.io"
     
     // MARK: - Methods
     
@@ -22,7 +22,9 @@ class QuoteClient {
     /// - Returns: A Quote object or nil if there's an error
     func fetchRandomQuote() async throws -> Quote {
         // Construct the full URL
-        let url = URL(string: "\(baseURL)/random")!
+        let url = URL(string: "\(baseURL)/api/random")!
+        print("URL:")
+        print(url)
         
         // Create a URLRequest
         var request = URLRequest(url: url)
@@ -31,6 +33,10 @@ class QuoteClient {
         
         // Perform the network request
         let (data, response) = try await URLSession.shared.data(for: request)
+        print("DATA:")
+        print(data)
+        print("RESPONSE:")
+        print(response)
         
         // Check if the response is successful (status code 200-299)
         guard let httpResponse = response as? HTTPURLResponse,
@@ -39,7 +45,11 @@ class QuoteClient {
         }
         
         // Decode the JSON response into our Quote model
-        let quote = try JSONDecoder().decode(Quote.self, from: data)
+        // ZenQuotes returns an array, so we take the first element
+        let quotes = try JSONDecoder().decode([Quote].self, from: data)
+        guard let quote = quotes.first else {
+            throw QuoteError.noData
+        }
         return quote
     }
     
@@ -47,7 +57,9 @@ class QuoteClient {
     /// - Parameter count: Number of quotes to fetch
     /// - Returns: Array of Quote objects
     func fetchRandomQuotes(count: Int = 5) async throws -> [Quote] {
-        let url = URL(string: "\(baseURL)/quotes/random?limit=\(count)")!
+//        precondition(count > 0, "count must be > 0")
+        
+        let url = URL(string: "\(baseURL)/api/quotes")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -61,7 +73,8 @@ class QuoteClient {
         }
         
         let quotes = try JSONDecoder().decode([Quote].self, from: data)
-        return quotes
+    
+        return Array(quotes.prefix(min(count, quotes.count)))
     }
 }
 
