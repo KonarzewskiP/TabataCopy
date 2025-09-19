@@ -23,9 +23,7 @@ class QuoteClient {
     func fetchRandomQuote() async throws -> Quote {
         // Construct the full URL
         let url = URL(string: "\(baseURL)/api/random")!
-        print("URL:")
-        print(url)
-        
+
         // Create a URLRequest
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -33,10 +31,6 @@ class QuoteClient {
         
         // Perform the network request
         let (data, response) = try await URLSession.shared.data(for: request)
-        print("DATA:")
-        print(data)
-        print("RESPONSE:")
-        print(response)
         
         // Check if the response is successful (status code 200-299)
         guard let httpResponse = response as? HTTPURLResponse,
@@ -57,7 +51,10 @@ class QuoteClient {
     /// - Parameter count: Number of quotes to fetch
     /// - Returns: Array of Quote objects
     func fetchRandomQuotes(count: Int = 5) async throws -> [Quote] {
-//        precondition(count > 0, "count must be > 0")
+        // Validate input
+        guard count > 0 else {
+            throw QuoteError.invalidCount(count: count)
+        }
         
         let url = URL(string: "\(baseURL)/api/quotes")!
         
@@ -78,24 +75,3 @@ class QuoteClient {
     }
 }
 
-// MARK: - Error Handling
-// Custom error types for better error handling
-enum QuoteError: Error, LocalizedError {
-    case invalidURL
-    case invalidResponse
-    case noData
-    case decodingError
-    
-    var errorDescription: String? {
-        switch self {
-        case .invalidURL:
-            return "Invalid URL"
-        case .invalidResponse:
-            return "Invalid response from server"
-        case .noData:
-            return "No data received"
-        case .decodingError:
-            return "Failed to decode response"
-        }
-    }
-}
