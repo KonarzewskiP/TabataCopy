@@ -35,14 +35,8 @@ struct Main: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
-                VStack(alignment: .leading) {
-//                    Spacer()
-                    Text("Whoever is happy will make other happy too.")
-
-                    Text("Anne Frank")
-                        .fontWeight(.bold)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                // Quote section with API integration
+                QuoteSection()
 
                 // Footer with control buttons
                 Footer()
