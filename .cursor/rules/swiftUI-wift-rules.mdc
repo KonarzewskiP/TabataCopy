@@ -1,0 +1,50 @@
+---
+globs: *View.swift,*Button.swift,*Component*.swift
+---
+
+# UI Component Guidelines
+
+## SwiftUI Component Structure
+- Create reusable components in the `Components/` directory
+- Use enums for component variants (size, style, etc.)
+- Provide sensible defaults for optional parameters
+- Include comprehensive previews for all components
+
+## Button Components
+- Use `@escaping` closures for button actions
+- Implement size variants with enums
+- Use `PlainButtonStyle()` to remove default button styling
+- Provide visual feedback for different states
+
+## Layout and Styling
+- Use consistent spacing values (8, 16, 24, 32)
+- Implement dark theme with white text on black backgrounds
+- Use system fonts with appropriate weights
+- Apply consistent corner radius values (8px standard)
+
+## Component Documentation
+- Document all public properties and methods
+- Explain the purpose of closures and their expected behavior
+- Include usage examples in comments
+- Provide preview implementations showing different variants
+
+## Example Component Structure
+```swift
+struct CustomButton: View {
+    enum Size { case small, medium, large }
+    
+    let title: String
+    let size: Size
+    let onTap: () -> Void
+    
+    init(title: String, size: Size = .medium, onTap: @escaping () -> Void) {
+        self.title = title
+        self.size = size
+        self.onTap = onTap
+    }
+    
+    var body: some View {
+        // Implementation
+    }
+}
+```
