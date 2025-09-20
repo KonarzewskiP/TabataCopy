@@ -20,6 +20,7 @@ struct Main: View {
                         .font(.system(size: 50))
                     Text("Start")
                         .font(.system(size: 50))
+                        .fontWeight(.bold)
                     Spacer()
                     Spacer()
                     
