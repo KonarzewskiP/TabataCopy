@@ -51,21 +51,15 @@ struct QuoteSection: View {
             else if let quote = viewModel.currentQuote {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(quote.quote)
-                        .foregroundColor(.white)
                     
                     Text(quote.author)
                         .fontWeight(.bold)
-                        .foregroundColor(.white)
                     
                     // Attribution link
                     Link("Powered by ZenQuotes", destination: URL(string: "https://zenquotes.io")!)
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.6))
                         .padding(.top, 2)
-                }
-                .onTapGesture {
-                    // Allow tapping to refresh the quote
-                    viewModel.refreshQuote()
                 }
             }
             // Fallback if no quote is available
