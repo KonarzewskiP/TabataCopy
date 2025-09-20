@@ -28,23 +28,60 @@ class QuoteClient {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        // Perform the network request
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        // Check if the response is successful (status code 200-299)
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
-            throw QuoteError.invalidResponse
+    
+        do {
+            print("🌐 Fetching quote from: \(url)")
+            
+            // Perform the network request
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            print("📊 Response received - Data size: \(data.count) bytes")
+            
+            // Check if the response is successful (status code 200-299)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("❌ Invalid HTTP response type")
+                throw QuoteError.invalidResponse
+            }
+            
+            print("📡 HTTP Status Code: \(httpResponse.statusCode)")
+            
+            guard httpResponse.statusCode == 200 else {
+                print("❌ HTTP Error - Status Code: \(httpResponse.statusCode)")
+                throw QuoteError.invalidResponse
+            }
+            
+            // Log the raw response for debugging
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("📝 Raw response: \(responseString)")
+            }
+            
+            // Decode the JSON response into our Quote model
+            // ZenQuotes returns an array, so we take the first element
+            let quotes = try JSONDecoder().decode([Quote].self, from: data)
+            guard let quote = quotes.first else {
+                print("❌ No quotes found in response")
+                throw QuoteError.noData
+            }
+            
+            print("✅ Successfully fetched quote: \"\(quote.quote)\" - \(quote.author)")
+            return quote
+            
+        } catch let decodingError as DecodingError {
+            print("❌ JSON Decoding Error: \(decodingError)")
+            print("📄 Decoding failure reason: \(decodingError.localizedDescription)")
+            throw QuoteError.decodingFailed(decodingError)
+            
+        } catch let urlError as URLError {
+            print("❌ Network Error: \(urlError)")
+            print("🌐 Network failure reason: \(urlError.localizedDescription)")
+            print("🔍 Error Code: \(urlError.code.rawValue)")
+            throw QuoteError.networkError(urlError)
+            
+        } catch {
+            print("❌ Unexpected Error: \(error)")
+            print("🔍 Error type: \(type(of: error))")
+            throw QuoteError.unknown(error)
         }
-        
-        // Decode the JSON response into our Quote model
-        // ZenQuotes returns an array, so we take the first element
-        let quotes = try JSONDecoder().decode([Quote].self, from: data)
-        guard let quote = quotes.first else {
-            throw QuoteError.noData
-        }
-        return quote
     }
     
     /// Fetches multiple random quotes
@@ -53,6 +90,7 @@ class QuoteClient {
     func fetchRandomQuotes(count: Int = 5) async throws -> [Quote] {
         // Validate input
         guard count > 0 else {
+            print("❌ Invalid count: \(count)")
             throw QuoteError.invalidCount(count: count)
         }
         
@@ -62,16 +100,43 @@ class QuoteClient {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
-            throw QuoteError.invalidResponse
+        do {
+            print("🌐 Fetching \(count) quotes from: \(url)")
+            
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            print("📊 Response received - Data size: \(data.count) bytes")
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("❌ Invalid HTTP response type")
+                throw QuoteError.invalidResponse
+            }
+            
+            print("📡 HTTP Status Code: \(httpResponse.statusCode)")
+            
+            guard httpResponse.statusCode == 200 else {
+                print("❌ HTTP Error - Status Code: \(httpResponse.statusCode)")
+                throw QuoteError.invalidResponse
+            }
+            
+            let quotes = try JSONDecoder().decode([Quote].self, from: data)
+            let resultQuotes = Array(quotes.prefix(min(count, quotes.count)))
+            
+            print("✅ Successfully fetched \(resultQuotes.count) quotes")
+            return resultQuotes
+            
+        } catch let decodingError as DecodingError {
+            print("❌ JSON Decoding Error: \(decodingError)")
+            throw QuoteError.decodingFailed(decodingError)
+            
+        } catch let urlError as URLError {
+            print("❌ Network Error: \(urlError)")
+            throw QuoteError.networkError(urlError)
+            
+        } catch {
+            print("❌ Unexpected Error: \(error)")
+            throw QuoteError.unknown(error)
         }
-        
-        let quotes = try JSONDecoder().decode([Quote].self, from: data)
-    
-        return Array(quotes.prefix(min(count, quotes.count)))
     }
 }
 
