@@ -8,12 +8,12 @@
 import Foundation
 
 // MARK: - Test Class
+
 // This is a simple test to verify our API integration works
 class QuoteClientTest {
-    
     static func testAPI() async {
         let client = QuoteClient()
-        
+
         do {
             print("Testing API connection...")
             let quote = try await client.fetchRandomQuote()
@@ -27,5 +27,6 @@ class QuoteClientTest {
 }
 
 // MARK: - Usage Example
+
 // To test this, you can call QuoteClientTest.testAPI() from anywhere in your app
 // For example, in your app's main view or in a test function

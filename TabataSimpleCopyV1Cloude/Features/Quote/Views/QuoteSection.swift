@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct QuoteSection: View {
-    
     // MARK: - Properties
+
     // Use our ViewModel to manage the quote state
     // @StateObject
     // Creates and owns an object (usually a ViewModel)
     // Keeps it alive for the lifetime of the view
     // Automatically updates the UI when the object's @Published properties change
     @StateObject private var viewModel = QuoteViewModel()
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             // Check if we're loading
@@ -39,7 +39,7 @@ struct QuoteSection: View {
                     Text(errorMessage)
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.7))
-                    
+
                     Button("Retry") {
                         viewModel.refreshQuote()
                     }
@@ -51,10 +51,10 @@ struct QuoteSection: View {
             else if let quote = viewModel.currentQuote {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(quote.quote)
-                    
+
                     Text(quote.author)
                         .fontWeight(.bold)
-                    
+
                     // Attribution link
                     Link("Powered by ZenQuotes", destination: URL(string: "https://zenquotes.io")!)
                         .font(.caption)
@@ -67,7 +67,7 @@ struct QuoteSection: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("The only way to do great work is to love what you do.")
                         .foregroundColor(.white)
-                    
+
                     Text("Steve Jobs")
                         .fontWeight(.bold)
                         .foregroundColor(.white)

@@ -8,11 +8,24 @@
 import SwiftUI
 
 struct WorkoutConfigurationSection: View {
+    @StateObject private var viewModel = WorkoutConfigurationViewModel()
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 20) {
+            Text("Initial Countdown: \(viewModel.workoutConfig.initialCountdown)")
+                .foregroundColor(.white)
+                .font(.title2)
+            
+            ImageButton(systemName: "plus") {
+                viewModel.incrementInitialCountdown()
+            }
+        }
     }
 }
 
 #Preview {
-    WorkoutConfigurationSection()
+    ZStack {
+        Color.black.ignoresSafeArea()
+        WorkoutConfigurationSection()
+    }
 }
