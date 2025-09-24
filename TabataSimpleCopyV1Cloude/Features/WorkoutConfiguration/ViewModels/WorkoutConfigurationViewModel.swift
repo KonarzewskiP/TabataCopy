@@ -27,4 +27,12 @@ class WorkoutConfigurationViewModel: ObservableObject {
     func incrementInitialCountdown() {
         workoutConfig.initialCountdown += 1
     }
+    
+    func incrementWarmupInterval() {
+        workoutConfig.warmupInterval += 5 // Increment by 5 seconds
+    }
+    
+    func incrementExerciseInterval() {
+        workoutConfig.exerciseInterval += 10 // Increment by 10 seconds
+    }
 }

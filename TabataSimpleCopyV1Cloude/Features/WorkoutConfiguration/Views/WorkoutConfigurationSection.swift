@@ -8,18 +8,56 @@
 import SwiftUI
 
 struct WorkoutConfigurationSection: View {
-    @StateObject private var viewModel = WorkoutConfigurationViewModel()
+    @ObservedObject var viewModel: WorkoutConfigurationViewModel
+    
+    init(viewModel: WorkoutConfigurationViewModel? = nil) {
+        if let sharedViewModel = viewModel {
+            self.viewModel = sharedViewModel
+        } else {
+            self.viewModel = WorkoutConfigurationViewModel()
+        }
+    }
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("Initial Countdown: \(viewModel.workoutConfig.initialCountdown)")
+            Text("Workout Configuration")
                 .foregroundColor(.white)
-                .font(.title2)
+                .font(.title)
+                .padding(.bottom)
             
-            ImageButton(systemName: "plus") {
-                viewModel.incrementInitialCountdown()
+            VStack(spacing: 20) {
+                VStack {
+                    Text("Initial Countdown: \(viewModel.workoutConfig.initialCountdown)")
+                        .foregroundColor(.white)
+                        .font(.headline)
+                    
+                    ImageButton(systemName: "plus") {
+                        viewModel.incrementInitialCountdown()
+                    }
+                }
+                
+                VStack {
+                    Text("Warmup: \(viewModel.workoutConfig.warmupInterval)s")
+                        .foregroundColor(.blue)
+                        .font(.headline)
+                    
+                    ImageButton(systemName: "plus") {
+                        viewModel.incrementWarmupInterval()
+                    }
+                }
+                
+                VStack {
+                    Text("Exercise: \(viewModel.workoutConfig.exerciseInterval)s")
+                        .foregroundColor(.red)
+                        .font(.headline)
+                    
+                    ImageButton(systemName: "plus") {
+                        viewModel.incrementExerciseInterval()
+                    }
+                }
             }
         }
+        .padding()
     }
 }
 
