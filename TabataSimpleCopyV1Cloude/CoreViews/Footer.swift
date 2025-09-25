@@ -8,6 +8,17 @@
 import SwiftUI
 
 struct Footer: View {
+    @ObservedObject var viewModel: WorkoutConfigurationViewModel
+    
+    init(viewModel: WorkoutConfigurationViewModel? = nil) {
+        if let sharedViewModel = viewModel {
+            self.viewModel = sharedViewModel
+        } else {
+            self.viewModel = WorkoutConfigurationViewModel()
+        }
+    }
+
+    
     var body: some View {
 //        VStack(spacing: 0) {
 //            Spacer()

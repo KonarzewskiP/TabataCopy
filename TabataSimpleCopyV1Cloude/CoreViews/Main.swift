@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Main: View {
+    @StateObject private var sharedWorkoutConfigViewModel = WorkoutConfigurationViewModel()
+    
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
