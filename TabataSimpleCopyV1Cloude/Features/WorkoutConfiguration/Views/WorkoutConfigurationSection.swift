@@ -17,53 +17,60 @@ struct WorkoutConfigurationSection: View {
             self.viewModel = WorkoutConfigurationViewModel()
         }
     }
-
+    
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Workout Configuration")
-                .foregroundColor(.white)
-                .font(.title)
-                .padding(.bottom)
+        ZStack {
+            Color.black.ignoresSafeArea()
             
             VStack(spacing: 20) {
-                VStack {
-                    Text("Initial Countdown: \(viewModel.workoutConfig.initialCountdown)")
-                        .foregroundColor(.white)
-                        .font(.headline)
-                    
-                    ImageButton(systemName: "plus") {
-                        viewModel.incrementInitialCountdown()
-                    }
-                }
+                Text("Workout Configuration")
+                    .foregroundColor(.white)
+                    .font(.title)
+                    .padding(.bottom)
                 
-                VStack {
-                    Text("Warmup: \(viewModel.workoutConfig.warmupInterval)s")
-                        .foregroundColor(.blue)
-                        .font(.headline)
+                VStack(spacing: 20) {
+                    VStack {
+                        Text("Initial Countdown: \(viewModel.workoutConfig.initialCountdown)")
+                            .foregroundColor(.white)
+                            .font(.headline)
+                        
+                        ImageButton(systemName: "plus") {
+                            viewModel.incrementInitialCountdown()
+                        }
+                    }
                     
-                    ImageButton(systemName: "plus") {
-                        viewModel.incrementWarmupInterval()
+                    VStack {
+                        Text("Warmup: \(viewModel.workoutConfig.warmupInterval)s")
+                            .foregroundColor(.blue)
+                            .font(.headline)
+                        
+                        ImageButton(systemName: "plus") {
+                            viewModel.incrementWarmupInterval()
+                        }
+                    }
+                    
+                    VStack {
+                        Text("Exercise: \(viewModel.workoutConfig.exerciseInterval)s")
+                            .foregroundColor(.red)
+                            .font(.headline)
+                        
+                        ImageButton(systemName: "plus") {
+                            viewModel.incrementExerciseInterval()
+                        }
                     }
                 }
-                
-                VStack {
-                    Text("Exercise: \(viewModel.workoutConfig.exerciseInterval)s")
-                        .foregroundColor(.red)
-                        .font(.headline)
-                    
-                    ImageButton(systemName: "plus") {
-                        viewModel.incrementExerciseInterval()
-                    }
-                }
+                .padding()
             }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(false)
         }
-        .padding()
     }
 }
 
-#Preview {
-    ZStack {
-        Color.black.ignoresSafeArea()
-        WorkoutConfigurationSection()
+    #Preview {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            WorkoutConfigurationSection()
+        }
     }
-}
+

@@ -11,7 +11,9 @@ import SwiftUI
 struct TabataSimpleCopyV1CloudeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                Main()
+            }
         }
     }
 }
