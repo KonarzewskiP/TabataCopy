@@ -9,21 +9,13 @@ import SwiftUI
 
 struct Footer: View {
     @ObservedObject var viewModel: WorkoutConfigurationViewModel
-    @Binding var showingSettings: Bool
     
-    init(viewModel: WorkoutConfigurationViewModel? = nil, showingSettings: Binding<Bool>? = nil) {
-        print("inside init")
+    init(viewModel: WorkoutConfigurationViewModel? = nil) {
         if let sharedViewModel = viewModel {
             self.viewModel = sharedViewModel
         } else {
             self.viewModel = WorkoutConfigurationViewModel()
         }
-        if let settingsBinding = showingSettings {
-            self._showingSettings = settingsBinding
-        } else {
-            self._showingSettings = .constant(false)
-        }
-        print("End of Init method")
     }
 
     
@@ -45,9 +37,9 @@ struct Footer: View {
                 }
 
                 // Settings button
-                ImageButton(systemName: "gearshape.circle", size: .large) {
-                    showingSettings = true
-                    print(showingSettings)
+                NavigationLink(destination: WorkoutConfigurationSection(viewModel: viewModel)) {
+                    Image(systemName: "gearshape.circle")
+                        .withImageButtonFormatting(size: .large)
                 }
             }
         }
@@ -63,8 +55,10 @@ struct Footer: View {
 }
 
 #Preview {
-    ZStack {
-        Color.black.ignoresSafeArea()
-        Footer()
+    NavigationStack {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            Footer()
+        }
     }
 }

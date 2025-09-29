@@ -9,7 +9,6 @@ import SwiftUI
 
 struct Main: View {
     @StateObject private var sharedWorkoutConfigViewModel = WorkoutConfigurationViewModel()
-    @State private var showingSettings = false
     
     var body: some View {
         ZStack {
@@ -43,16 +42,10 @@ struct Main: View {
                 QuoteSection()
 
                 // Footer with control buttons
-                Footer(viewModel: sharedWorkoutConfigViewModel, showingSettings: $showingSettings)
+                Footer(viewModel: sharedWorkoutConfigViewModel)
                     .padding(.top, 24)
             }
             .foregroundStyle(.white)
-        }
-        .navigationDestination(isPresented: $showingSettings) {
-            WorkoutConfigurationSection(viewModel: sharedWorkoutConfigViewModel)
-        }
-        .onChange(of: showingSettings) { oldValue, newValue in
-            print("Main: showingSettings changed from \(oldValue) to \(newValue)")
         }
     }
 }
