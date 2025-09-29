@@ -46,15 +46,31 @@ struct ImageButton: View {
     var body: some View {
         Button(action: onTap) {
             Image(systemName: systemName)
-                .font(.system(size: size.iconSize, weight: .medium))
-                .foregroundStyle(.white)
-                .padding(size.padding)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.black.opacity(0.001))
-                )
+                .withImageButtonFormatting(size: size)
         }
         .buttonStyle(PlainButtonStyle()) // This is important to remove the default button style
+    }
+}
+
+struct ImageButtonViewModifier: ViewModifier {
+    let size: ImageButton.Size
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: size.iconSize, weight: .medium))
+            .foregroundStyle(.white)
+            .padding(size.padding)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.black.opacity(0.001))
+            )
+    }
+    
+    
+}
+
+extension View {
+    func withImageButtonFormatting(size: ImageButton.Size = .medium) -> some View {
+        self.modifier(ImageButtonViewModifier(size: size))
     }
 }
 
