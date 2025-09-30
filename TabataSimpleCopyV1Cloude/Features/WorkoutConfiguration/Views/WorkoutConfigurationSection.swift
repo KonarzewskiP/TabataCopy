@@ -22,38 +22,38 @@ struct WorkoutConfigurationSection: View {
         ZStack {
             Color.black.ignoresSafeArea()
             
-            VStack(spacing: 20) {
-                Text("Workout Configuration")
+            VStack(alignment: .leading, spacing: 0) {
+                Text("Settings")
                     .foregroundColor(.white)
                     .font(.title)
                     .padding(.bottom)
                 
-                VStack(spacing: 20) {
-                    VStack {
+                VStack(spacing: 0) {
+                    HStack {
                         Text("Initial Countdown: \(viewModel.workoutConfig.initialCountdown)")
                             .foregroundColor(.white)
                             .font(.headline)
-                        
+                        Spacer()
                         ImageButton(systemName: "plus") {
                             viewModel.incrementInitialCountdown()
                         }
                     }
                     
-                    VStack {
+                    HStack {
                         Text("Warmup: \(viewModel.workoutConfig.warmupInterval)s")
                             .foregroundColor(.blue)
                             .font(.headline)
-                        
+                        Spacer()
                         ImageButton(systemName: "plus") {
                             viewModel.incrementWarmupInterval()
                         }
                     }
                     
-                    VStack {
+                    HStack {
                         Text("Exercise: \(viewModel.workoutConfig.exerciseInterval)s")
                             .foregroundColor(.red)
                             .font(.headline)
-                        
+                            Spacer()
                         ImageButton(systemName: "plus") {
                             viewModel.incrementExerciseInterval()
                         }
@@ -61,8 +61,6 @@ struct WorkoutConfigurationSection: View {
                 }
                 .padding()
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden(false)
         }
     }
 }
