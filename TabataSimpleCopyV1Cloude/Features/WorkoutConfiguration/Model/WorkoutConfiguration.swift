@@ -14,31 +14,28 @@ struct WorkoutConfiguration {
     var warmupInterval: Int = 0
     var exerciseInterval: Int = 0
     var restInterval: Int = 0
-
-    // Private backing properties for validated fields
-    private var _numberOfSets: Int = 1
-    private var _numberOfCycles: Int = 1
-
     var recoveryInterval: Int = 0
     var cooldownInterval: Int = 0
-
-    // Computed property with validation for numberOfSets
-    var numberOfSets: Int {
-        get {
-            return _numberOfSets
-        }
-        set {
-            _numberOfSets = max(1, newValue) // Ensures value is never less than 1
+    
+    // Validated properties - automatically enforce minimum value of 1
+    var numberOfSets: Int = 1 {
+        didSet {
+            numberOfSets = ensureMinimumValue(numberOfSets)
         }
     }
-
-    // Computed property with validation for numberOfCycles
-    var numberOfCycles: Int {
-        get {
-            return _numberOfCycles
+    
+    var numberOfCycles: Int = 1 {
+        didSet {
+            numberOfCycles = ensureMinimumValue(numberOfCycles)
         }
-        set {
-            _numberOfCycles = max(1, newValue) // Ensures value is never less than 1
-        }
+    }
+    
+    // MARK: - Private Helper Methods
+    
+    /// Ensures the value is never less than 1
+    /// - Parameter value: The value to validate
+    /// - Returns: The value if >= 1, otherwise returns 1
+    private func ensureMinimumValue(_ value: Int) -> Int {
+        return value < 1 ? 1 : value
     }
 }
