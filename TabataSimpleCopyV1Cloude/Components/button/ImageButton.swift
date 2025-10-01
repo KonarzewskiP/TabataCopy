@@ -10,12 +10,14 @@ import SwiftUI
 struct ImageButton: View {
     // Size variants enum
     enum Size {
+        case tiny
         case small
         case medium
         case large
 
         var iconSize: CGFloat {
             switch self {
+            case .tiny: return 20
             case .small: return 32
             case .medium: return 46
             case .large: return 60
@@ -24,6 +26,7 @@ struct ImageButton: View {
 
         var padding: CGFloat {
             switch self {
+            case .tiny: return 12
             case .small: return 8
             case .medium: return 4
             case .large: return 0
@@ -83,6 +86,19 @@ extension View {
                 .foregroundColor(.white)
                 .padding(.bottom, 20)
 
+            // Small size variant
+            HStack {
+                Text("Tiny:")
+                    .foregroundColor(.white)
+                ImageButton(systemName: "gearshape.circle", size: .tiny) {
+                    print("Tiny gear button tapped!")
+                }
+                ImageButton(systemName: "play.circle", size: .tiny) {
+                    print("Tiny play button tapped!")
+                }
+            }
+
+            
             // Small size variant
             HStack {
                 Text("Small:")
