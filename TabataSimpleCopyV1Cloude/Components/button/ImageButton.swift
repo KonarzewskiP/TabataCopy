@@ -67,13 +67,11 @@ struct ImageButtonViewModifier: ViewModifier {
                     .fill(Color.black.opacity(0.001))
             )
     }
-    
-    
 }
 
 extension View {
     func withImageButtonFormatting(size: ImageButton.Size = .medium) -> some View {
-        self.modifier(ImageButtonViewModifier(size: size))
+        modifier(ImageButtonViewModifier(size: size))
     }
 }
 
@@ -98,7 +96,6 @@ extension View {
                 }
             }
 
-            
             // Small size variant
             HStack {
                 Text("Small:")

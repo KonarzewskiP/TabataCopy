@@ -11,5 +11,4 @@ struct Timer: Codable, Equatable {
     var currentTime: Int = 0
     var currentRound: Int = 0
     var totalRounds: Int = 0
-    
 }

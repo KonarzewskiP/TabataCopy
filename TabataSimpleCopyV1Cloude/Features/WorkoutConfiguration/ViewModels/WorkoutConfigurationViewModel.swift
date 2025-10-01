@@ -9,7 +9,6 @@ import SwiftUI
 
 @MainActor
 class WorkoutConfigurationViewModel: ObservableObject {
-    
     @Published var workoutConfig: WorkoutConfiguration = .init()
 
     func setTimeInterval(_ timeInSeconds: Int) -> Int {
@@ -23,15 +22,15 @@ class WorkoutConfigurationViewModel: ObservableObject {
         guard rounds < 100 else { return 99 }
         return rounds
     }
-    
+
     func incrementInitialCountdown() {
         workoutConfig.initialCountdown += 1
     }
-    
+
     func incrementWarmupInterval() {
         workoutConfig.warmupInterval += 5 // Increment by 5 seconds
     }
-    
+
     func incrementExerciseInterval() {
         workoutConfig.exerciseInterval += 10 // Increment by 10 seconds
     }

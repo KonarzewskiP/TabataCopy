@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WorkoutConfigurationSection: View {
     @ObservedObject var viewModel: WorkoutConfigurationViewModel
-    
+
     init(viewModel: WorkoutConfigurationViewModel? = nil) {
         if let sharedViewModel = viewModel {
             self.viewModel = sharedViewModel
@@ -17,17 +17,17 @@ struct WorkoutConfigurationSection: View {
             self.viewModel = WorkoutConfigurationViewModel()
         }
     }
-    
+
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            
+
             VStack(alignment: .leading, spacing: 0) {
                 Text("Settings")
                     .foregroundColor(.white)
                     .font(.title)
                     .padding(.bottom)
-                
+
                 VStack(spacing: 0) {
                     HStack {
                         Text("Initial Countdown: \(viewModel.workoutConfig.initialCountdown)")
@@ -38,7 +38,7 @@ struct WorkoutConfigurationSection: View {
                             viewModel.incrementInitialCountdown()
                         }
                     }
-                    
+
                     HStack {
                         Text("Warmup: \(viewModel.workoutConfig.warmupInterval)s")
                             .foregroundColor(.blue)
@@ -48,12 +48,12 @@ struct WorkoutConfigurationSection: View {
                             viewModel.incrementWarmupInterval()
                         }
                     }
-                    
+
                     HStack {
                         Text("Exercise: \(viewModel.workoutConfig.exerciseInterval)s")
                             .foregroundColor(.red)
                             .font(.headline)
-                            Spacer()
+                        Spacer()
                         ImageButton(systemName: "plus") {
                             viewModel.incrementExerciseInterval()
                         }
@@ -65,10 +65,9 @@ struct WorkoutConfigurationSection: View {
     }
 }
 
-    #Preview {
-        ZStack {
-            Color.black.ignoresSafeArea()
-            WorkoutConfigurationSection()
-        }
+#Preview {
+    ZStack {
+        Color.black.ignoresSafeArea()
+        WorkoutConfigurationSection()
     }
-
+}

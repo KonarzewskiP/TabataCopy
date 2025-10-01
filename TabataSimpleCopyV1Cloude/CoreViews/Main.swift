@@ -9,13 +9,12 @@ import SwiftUI
 
 struct Main: View {
     @StateObject private var sharedWorkoutConfigViewModel = WorkoutConfigurationViewModel()
-    
+
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            
+
             VStack(spacing: 32) {
-                
                 VStack(alignment: .leading) {
                     Spacer()
                     Text("Press Play To")
@@ -25,19 +24,19 @@ struct Main: View {
                         .fontWeight(.bold)
                     Spacer()
                     Spacer()
-                    
+
                     Text("Loaded Preset ")
-                    +
-                    Text("Tabata")
+                        +
+                        Text("Tabata")
                         .fontWeight(.bold)
-                        
+
                     Text("Last workout: ")
-                    +
-                    Text("Yesterday")
+                        +
+                        Text("Yesterday")
                         .fontWeight(.bold)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 // Quote section with API integration
                 QuoteSection()
 
