@@ -30,13 +30,16 @@ struct SettingRow: View {
         }
     }
 
-    var name: String
-    var type: SettingType
-    var value: Int = 1
+    let name: String
+    var value: Int
+    let type: SettingType
+    let onTap: () -> Void
 
-    init(name: String, type: SettingType) {
+    init(name: String, value: Int, type: SettingType, onTap: @escaping () -> Void) {
         self.name = name
+        self.value = value
         self.type = type
+        self.onTap = onTap // Assign the closure to the onTap property for later use
     }
 
     var colors: [Color] = [.orange, .yellow, .green, .blue, .indigo, .purple]
@@ -62,7 +65,7 @@ struct SettingRow: View {
             Spacer()
 
             ImageButton(systemName: "chevron.right", size: .tiny) {
-                print("NAME: \(name)")
+                onTap()
             }
         }
     }
@@ -80,9 +83,9 @@ struct SettingRow: View {
     ZStack {
         Color.black.ignoresSafeArea()
         VStack {
-            SettingRow(name: "Initial Countdown", type: .setTime)
-            SettingRow(name: "Number of Sets", type: .setSets)
-            SettingRow(name: "Number of Cycles", type: .setCycles)
+            SettingRow(name: "Initial Countdown", value: 2, type: .setTime) { print("Xd") }
+            SettingRow(name: "Number of Sets", value: 1, type: .setSets) { print("LoL") }
+            SettingRow(name: "Number of Cycles", value: 0, type: .setCycles) {}
         }
     }
 }
