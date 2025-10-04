@@ -20,7 +20,7 @@ struct SettingRow: View {
             case .setCycles: return "cycle"
             }
         }
-        
+
         var image: String {
             switch self {
             case .setTime: return "stopwatch"
@@ -38,6 +38,7 @@ struct SettingRow: View {
         self.name = name
         self.type = type
     }
+
     var colors: [Color] = [.orange, .yellow, .green, .blue, .indigo, .purple]
     var body: some View {
         HStack(spacing: 12) {
@@ -57,7 +58,7 @@ struct SettingRow: View {
                 Text("\(displayUnits(value: value))")
             }
             .foregroundStyle(.white)
-            
+
             Spacer()
 
             ImageButton(systemName: "chevron.right", size: .tiny) {
@@ -65,12 +66,12 @@ struct SettingRow: View {
             }
         }
     }
-    
+
     private func displayUnits(value: Int) -> String {
         if value == 1 {
             return "\(value) \(type.unit)"
         }
-        
+
         return "\(value) \(type.unit)s"
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MinValue.swift
+//  Min.swift
 //  TabataSimpleCopyV1Cloude
 //
 //  Created by Pawel Konarzewski on 02/10/2025.
@@ -10,7 +10,7 @@ struct Min<T: Comparable> {
     var min: T
     var value: T
 
-    init(wrappedValue: T,_ min: T) {
+    init(wrappedValue: T, _ min: T) {
         value = wrappedValue
         self.min = min
     }
