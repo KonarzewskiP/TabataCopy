@@ -16,4 +16,5 @@ struct WorkoutConfiguration {
     @Min(0) var restInterval: Int = 0
     @Min(0) var recoveryInterval: Int = 0
     @Min(0) var cooldownInterval: Int = 0
+    @Min(0) var numberOfSets: Int = 0
 }

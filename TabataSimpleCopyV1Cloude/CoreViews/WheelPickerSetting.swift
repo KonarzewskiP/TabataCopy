@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct WheelPickerSetting: View {
-    @State private var selectedSets: Int = 62
+    @Binding var number: Int
+    var settingName: String
 
     var body: some View {
         ZStack {
@@ -16,7 +17,7 @@ struct WheelPickerSetting: View {
 
             VStack {
                 // Top label
-                Text("Number Of Sets")
+                Text("\(settingName)")
                     .font(.system(size: 22, weight: .regular))
                     .foregroundColor(.white)
                     .padding(.top, 20)
@@ -24,14 +25,14 @@ struct WheelPickerSetting: View {
                 Spacer()
 
                 // Current selection display (center)
-                Text("\(selectedSets) Sets")
+                Text("\(number) Sets")
                     .font(.system(size: 28, weight: .regular))
                     .foregroundColor(.white)
 
                 Spacer()
 
                 // Bottom wheel picker
-                Picker("Number of Sets", selection: $selectedSets) {
+                Picker("Number of Sets", selection: $number) {
                     ForEach(1 ... 99, id: \.self) { number in
                         Text("\(number) Sets")
                             .font(.system(size: 20, weight: .regular))
@@ -47,8 +48,9 @@ struct WheelPickerSetting: View {
 }
 
 #Preview {
+    @Previewable @State var numberOfSets = 10
     ZStack {
         Color.black.ignoresSafeArea()
-        WheelPickerSetting()
+        WheelPickerSetting(number: $numberOfSets, settingName: "Number of Sets")
     }
 }

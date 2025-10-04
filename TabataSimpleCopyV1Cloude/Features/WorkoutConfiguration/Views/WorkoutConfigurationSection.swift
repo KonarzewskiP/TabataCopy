@@ -30,6 +30,19 @@ struct WorkoutConfigurationSection: View {
 
                 VStack(spacing: 0) {
                     HStack {
+                        Text("Number of Sets: \(viewModel.workoutConfig.numberOfSets)")
+                            .foregroundColor(.white)
+                            .font(.headline)
+                        Spacer()
+                        NavigationLink(
+                            destination: WheelPickerSetting(number: $viewModel.workoutConfig.numberOfSets, settingName: "Number of XXX")
+                        ) {
+                            Image(systemName: "plus")
+                                .withImageButtonFormatting(size: .medium)
+                        }
+                    }
+
+                    HStack {
                         Text("Initial Countdown: \(viewModel.workoutConfig.initialCountdown)")
                             .foregroundColor(.white)
                             .font(.headline)
@@ -66,8 +79,10 @@ struct WorkoutConfigurationSection: View {
 }
 
 #Preview {
-    ZStack {
-        Color.black.ignoresSafeArea()
-        WorkoutConfigurationSection()
+    NavigationStack {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            WorkoutConfigurationSection()
+        }
     }
 }
