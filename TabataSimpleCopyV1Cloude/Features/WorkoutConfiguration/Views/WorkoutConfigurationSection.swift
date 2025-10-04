@@ -28,52 +28,22 @@ struct WorkoutConfigurationSection: View {
                     .font(.title)
                     .padding(.bottom)
 
-                VStack(spacing: 0) {
-                    HStack {
-                        Text("Number of Sets: \(viewModel.workoutConfig.numberOfSets)")
-                            .foregroundColor(.white)
-                            .font(.headline)
-                        Spacer()
-                        NavigationLink(
-                            destination: WheelPickerSetting(number: $viewModel.workoutConfig.numberOfSets, settingName: "Number of XXX")
-                        ) {
-                            Image(systemName: "plus")
-                                .withImageButtonFormatting(size: .medium)
-                        }
-                    }
-
-                    HStack {
-                        Text("Initial Countdown: \(viewModel.workoutConfig.initialCountdown)")
-                            .foregroundColor(.white)
-                            .font(.headline)
-                        Spacer()
-                        ImageButton(systemName: "plus") {
-                            viewModel.incrementInitialCountdown()
-                        }
-                    }
-
-                    HStack {
-                        Text("Warmup: \(viewModel.workoutConfig.warmupInterval)s")
-                            .foregroundColor(.blue)
-                            .font(.headline)
-                        Spacer()
-                        ImageButton(systemName: "plus") {
-                            viewModel.incrementWarmupInterval()
-                        }
-                    }
-
-                    HStack {
-                        Text("Exercise: \(viewModel.workoutConfig.exerciseInterval)s")
-                            .foregroundColor(.red)
-                            .font(.headline)
-                        Spacer()
-                        ImageButton(systemName: "plus") {
-                            viewModel.incrementExerciseInterval()
-                        }
-                    }
+                VStack(spacing: 8) {
+                    SettingRow(name: "Number of Sets",
+                               value: $viewModel.workoutConfig.numberOfSets,
+                               type: .setSets)
+                    SettingRow(name: "Initial Countdown",
+                               value: $viewModel.workoutConfig.initialCountdown,
+                               type: .setTime)
+                    SettingRow(name: "Warmup",
+                               value: $viewModel.workoutConfig.warmupInterval,
+                               type: .setTime)
+                    SettingRow(name: "Exercise",
+                               value: $viewModel.workoutConfig.exerciseInterval,
+                               type: .setTime)
                 }
-                .padding()
             }
+            .padding(.horizontal, 8)
         }
     }
 }

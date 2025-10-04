@@ -31,15 +31,13 @@ struct SettingRow: View {
     }
 
     let name: String
-    var value: Int
+    @Binding var value: Int
     let type: SettingType
-    let onTap: () -> Void
 
-    init(name: String, value: Int, type: SettingType, onTap: @escaping () -> Void) {
+    init(name: String, value: Binding<Int>, type: SettingType) {
         self.name = name
-        self.value = value
+        _value = value
         self.type = type
-        self.onTap = onTap // Assign the closure to the onTap property for later use
     }
 
     var colors: [Color] = [.orange, .yellow, .green, .blue, .indigo, .purple]
@@ -64,8 +62,11 @@ struct SettingRow: View {
 
             Spacer()
 
-            ImageButton(systemName: "chevron.right", size: .tiny) {
-                onTap()
+            NavigationLink(
+                destination: WheelPickerSetting(number: $value, settingName: name))
+            {
+                Image(systemName: "chevron.right")
+                    .withImageButtonFormatting(size: .tiny)
             }
         }
     }
@@ -80,12 +81,14 @@ struct SettingRow: View {
 }
 
 #Preview {
-    ZStack {
-        Color.black.ignoresSafeArea()
-        VStack {
-            SettingRow(name: "Initial Countdown", value: 2, type: .setTime) { print("Xd") }
-            SettingRow(name: "Number of Sets", value: 1, type: .setSets) { print("LoL") }
-            SettingRow(name: "Number of Cycles", value: 0, type: .setCycles) {}
+    NavigationStack {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            VStack {
+                SettingRow(name: "Initial Countdown", value: .constant(2), type: .setTime)
+                SettingRow(name: "Number of Sets", value: .constant(1), type: .setSets)
+                SettingRow(name: "Number of Cycles", value: .constant(0), type: .setCycles)
+            }
         }
     }
 }
